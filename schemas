@@ -1,0 +1,53 @@
+CREATE TABLE profile (
+  id UUID DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
+  username VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE task (
+  id UUID DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
+  task_desc VARCHAR NOT NULL,
+  profile_id UUID NOT NULL REFERENCES profile(id),
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+
+// data for populating profile table with mock people: //
+
+INSERT INTO profile (username, password) VALUES ('hank', 'password123');
+INSERT INTO profile (username, password) VALUES ('michelle', 'helloworld');
+INSERT INTO profile (username, password) VALUES ('hank', 'notTheFirstHank');
+
+// function hashPassword(password) {
+// 	const saltRounds = 10; // Number of salt rounds used to generate salt
+// 	const salt = bcrypt.genSaltSync(saltRounds); // Generate salt
+// 	const hash = bcrypt.hashSync(password, salt); // Generate hash using salt and password
+// 	return hash;
+// }
+
+// const password = 'myPassword123';
+// const hash = hashPassword(password);
+// console.log('hashed pw: ' + hash);
+
+// const HASHED_PW = '$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS';
+
+// client.query(
+// 	`INSERT INTO profile (username, password) VALUES ('hank', '$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS')`,
+// 	(err, res) => {
+// 		if (!err) {
+// 			console.log(res);
+// 		} else {
+// 			console.log(err.message);
+// 		}
+// 	}
+// );
+
+// // Load hash from your password DB.
+// bcrypt.compare(myPlaintextPassword, hash, function (err, result) {
+// 	// result == true
+// });
+// bcrypt.compare(someOtherPlaintextPassword, hash, function (err, result) {
+// 	// result == false
+// });
