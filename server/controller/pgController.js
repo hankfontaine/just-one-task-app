@@ -19,10 +19,13 @@ const pgController = {
 		console.log(req.params.id);
 
 		const query = await client.query(
-			`SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '${req.params.id}';`
+			`SELECT * FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '${req.params.id}';`
 		);
 		try {
-			res.locals.table = query.rows.map((task) => task.task_desc);
+			res.locals.table = query.rows.map((task) => [
+				task.task_desc,
+				task.updated_at,
+			]);
 			return next();
 		} catch {
 			return next({
