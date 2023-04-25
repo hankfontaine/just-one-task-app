@@ -1,6 +1,12 @@
 /* eslint-disable comma-dangle */
 /* eslint-disable no-tabs */
 /* eslint-disable indent */
+const { Client } = require('pg');
+
+const connectionString =
+	'postgres://ipudzayh:QxX6Haw8-tMjKZ2_-FQjQAZXQhYw35Ag@lallah.db.elephantsql.com/ipudzayh';
+const client = new Client({ connectionString });
+client.connect();
 
 const pgController = {
 	postListItem: async (req, res, next) => {
@@ -14,9 +20,19 @@ const pgController = {
 	},
 
 	getList: async (req, res, next) => {
-		// const response = await client.query('SELECT * FROM list');
-		// res.locals.list = response;
-		return next();
+		const query = await client.query(
+			"SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';"
+		);
+		try {
+			res.locals.table = query.rows;
+			return next();
+		} catch {
+			return next({
+				log: 'Express error handler caught unknown middleware error',
+				status: 400,
+				message: { err: 'An error occurred' },
+			});
+		}
 	},
 
 	updateList: async (req, res, next) => {
