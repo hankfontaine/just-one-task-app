@@ -30,7 +30,7 @@ const pgController = {
 
 	postTask: async (req, res, next) => {
 		await client.query(
-			"INSERT INTO task (task_desc, profile_id) VALUES ('make coffee', '725543eb-8fd4-4e43-b5ac-2374c16900ef');"
+			"INSERT INTO task (task_desc, profile_id) VALUES ('say hi to my friends', '725543eb-8fd4-4e43-b5ac-2374c16900ef');"
 		);
 		try {
 			// console.log(query);
@@ -58,9 +58,7 @@ const pgController = {
 
 	deleteTask: async (req, res, next) => {
 		await client.query(
-			"DELETE FROM task WHERE profile_id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';"
-
-			// "SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';"
+			"DELETE FROM task WHERE id IN (SELECT id FROM task WHERE profile_id = '725543eb-8fd4-4e43-b5ac-2374c16900ef' ORDER BY created_at DESC LIMIT 1);"
 		);
 		try {
 			// console.log(query);

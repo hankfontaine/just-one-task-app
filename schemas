@@ -68,3 +68,6 @@
 
 // query to return all tasks and their completion dates
 // "SELECT * FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';",
+
+
+// SELECT * FROM task WHERE profile_id = '725543eb-8fd4-4e43-b5ac-2374c16900ef' ORDER BY created_at DESC LIMIT 1;
