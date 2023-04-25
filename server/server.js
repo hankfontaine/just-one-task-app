@@ -12,25 +12,25 @@ const PORT = 3000;
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, './public')));
 
-// for demonstrative purposes, this is the ID I'll be using in my project.
-// const PROFILE_ID = '725543eb-8fd4-4e43-b5ac-2374c16900ef';
-
-app.get('/', pgController.getList, (req, res) => {
+app.get('/', pgController.getTasks, (req, res) => {
 	console.log(res.locals.table);
 	res.status(200).json(res.locals.table);
 });
 
-// app.post('/test', pgController.postListItem, (req, res) => {
-// 	return res.status(200).json({ recieved: true });
-// });
+app.post('/', pgController.postTask, pgController.getTasks, (req, res) => {
+	console.log(res.locals.table);
+	res.status(200).json(res.locals.table);
+});
 
-// app.delete('/test/:id', pgController.deleteListItem, (req, res) => {
-// 	return res.status(200).json({ recieved: true });
-// });
+app.delete('/', pgController.deleteTask, pgController.getTasks, (req, res) => {
+	console.log(res.locals.table);
+	res.status(200).json(res.locals.table);
+});
 
-// app.patch('/test', pgController.updateList, (req, res) => {
-// 	return res.status(200).json({ recieved: true });
-// });
+app.patch('/', pgController.updateTask, pgController.getTasks, (req, res) => {
+	console.log(res.locals.table);
+	res.status(200).json(res.locals.table);
+});
 
 app.get('/', (req, res) => res.status(404).send('Error: page not found'));
 
