@@ -71,3 +71,7 @@
 
 
 // SELECT * FROM task WHERE profile_id = '725543eb-8fd4-4e43-b5ac-2374c16900ef' ORDER BY created_at DESC LIMIT 1;
+
+
+// for demonstrative purposes, this is the ID I'll be using in my project.
+// const PROFILE_ID = '725543eb-8fd4-4e43-b5ac-2374c16900ef';
