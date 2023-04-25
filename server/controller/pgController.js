@@ -9,18 +9,20 @@ const client = new Client({ connectionString });
 client.connect();
 
 // static user profile.id for demo:
-const profileId = '725543eb-8fd4-4e43-b5ac-2374c16900ef';
+// const profileId = '725543eb-8fd4-4e43-b5ac-2374c16900ef';
 // static user task for demo:
-const task = 'do my laundry';
+// const task = 'do my laundry';
 
 const pgController = {
 	// GET list of user's completed tasks
 	getTasks: async (req, res, next) => {
+		console.log(req.params.id);
+
 		const query = await client.query(
-			`SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '${profileId}';`
+			`SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '${req.params.id}';`
 		);
 		try {
-			res.locals.table = query.rows;
+			res.locals.table = query.rows.map((task) => task.task_desc);
 			return next();
 		} catch {
 			return next({
@@ -33,7 +35,10 @@ const pgController = {
 	// POST user's current task
 	postTask: async (req, res, next) => {
 		await client.query(
-			`INSERT INTO task (task_desc, profile_id) VALUES ('${task}', '${profileId}');`
+			`INSERT INTO task (task_desc, profile_id) VALUES ('${req.params.task.replaceAll(
+				'_',
+				' '
+			)}', '${req.params.id}');`
 		);
 		try {
 			return next();
@@ -48,7 +53,7 @@ const pgController = {
 	// UPDATE user's current task completion date
 	updateTask: async (req, res, next) => {
 		await client.query(
-			`UPDATE task SET updated_at = NOW() WHERE id IN (SELECT id FROM task WHERE profile_id = '${profileId}' ORDER BY created_at DESC LIMIT 1);`
+			`UPDATE task SET updated_at = NOW() WHERE id IN (SELECT id FROM task WHERE profile_id = '${req.params.id}' ORDER BY created_at DESC LIMIT 1);`
 		);
 		try {
 			return next();
@@ -63,7 +68,7 @@ const pgController = {
 	// DELETE user's current task
 	deleteTask: async (req, res, next) => {
 		await client.query(
-			`DELETE FROM task WHERE id IN (SELECT id FROM task WHERE profile_id = '${profileId}' ORDER BY created_at DESC LIMIT 1);`
+			`DELETE FROM task WHERE id IN (SELECT id FROM task WHERE profile_id = '${req.params.id}' ORDER BY created_at DESC LIMIT 1);`
 		);
 		try {
 			return next();
