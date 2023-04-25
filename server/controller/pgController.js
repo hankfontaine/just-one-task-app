@@ -30,7 +30,7 @@ const pgController = {
 
 	postTask: async (req, res, next) => {
 		await client.query(
-			"INSERT INTO task (task_desc, profile_id) VALUES ('say hi to ryan', '725543eb-8fd4-4e43-b5ac-2374c16900ef');"
+			"INSERT INTO task (task_desc, profile_id) VALUES ('make coffee', '725543eb-8fd4-4e43-b5ac-2374c16900ef');"
 		);
 		try {
 			// console.log(query);
@@ -57,13 +57,22 @@ const pgController = {
 	},
 
 	deleteTask: async (req, res, next) => {
-		// const id = req.params.id;
-		// const response = await client.query(
-		// 	'DELETE FROM example_table WHERE id = 1;',
-		// 	[id]
-		// );
-		// console.log(response);
-		return next();
+		await client.query(
+			"DELETE FROM task WHERE profile_id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';"
+
+			// "SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';"
+		);
+		try {
+			// console.log(query);
+			// res.locals.table = query;
+			return next();
+		} catch {
+			return next({
+				log: 'Express error handler caught unknown middleware error',
+				status: 400,
+				message: { err: 'An error occurred' },
+			});
+		}
 	},
 };
 
