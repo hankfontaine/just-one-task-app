@@ -1,24 +1,25 @@
-CREATE TABLE profile (
-  id UUID DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
-  username VARCHAR NOT NULL,
-  password VARCHAR NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
+/* eslint-disable no-tabs */
+// CREATE TABLE profile (
+//   id UUID DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
+//   username VARCHAR NOT NULL,
+//   password VARCHAR NOT NULL,
+//   created_at TIMESTAMP DEFAULT NOW(),
+//   updated_at TIMESTAMP DEFAULT NOW()
+// );
 
-CREATE TABLE task (
-  id UUID DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
-  task_desc VARCHAR NOT NULL,
-  profile_id UUID NOT NULL REFERENCES profile(id),
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
+// CREATE TABLE task (
+//   id UUID DEFAULT gen_random_uuid() NOT NULL PRIMARY KEY,
+//   task_desc VARCHAR NOT NULL,
+//   profile_id UUID NOT NULL REFERENCES profile(id),
+//   created_at TIMESTAMP DEFAULT NOW(),
+//   updated_at TIMESTAMP DEFAULT NOW()
+// );
 
 // data for populating profile table with mock people: //
 
-INSERT INTO profile (username, password) VALUES ('hank', 'password123');
-INSERT INTO profile (username, password) VALUES ('michelle', 'helloworld');
-INSERT INTO profile (username, password) VALUES ('hank', 'notTheFirstHank');
+// INSERT INTO profile (username, password) VALUES ('hank', 'password123');
+// INSERT INTO profile (username, password) VALUES ('michelle', 'helloworld');
+// INSERT INTO profile (username, password) VALUES ('hank', 'notTheFirstHank');
 
 // function hashPassword(password) {
 // 	const saltRounds = 10; // Number of salt rounds used to generate salt
@@ -51,3 +52,19 @@ INSERT INTO profile (username, password) VALUES ('hank', 'notTheFirstHank');
 // bcrypt.compare(someOtherPlaintextPassword, hash, function (err, result) {
 // 	// result == false
 // });
+
+// need to work on authentication portion - causing errors here
+// `SELECT id FROM profile WHERE username = ${USER_NAME} AND password = ${HASHED_PW};`,
+
+// this is the ID we will be using as a foreign key in our tasks table for queries.
+
+// profile ID: 725543eb-8fd4-4e43-b5ac-2374c16900ef
+// nb: this is what i will use as my foreign key
+
+// "SELECT id FROM profile WHERE username = 'hank' AND password = '$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS';",
+
+// this is the query where we can look up associated tasks for the unique user.
+// "SELECT * FROM task JOIN profile ON username = 'hank' AND password = '$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS';",
+
+// query to return all tasks and their completion dates
+// "SELECT * FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';",

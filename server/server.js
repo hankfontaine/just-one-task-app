@@ -17,28 +17,12 @@ client.connect();
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, '../public')));
 
-// for demonstrative purposes, this is the username and password I'll be using in my project.
-const USER_NAME = 'hank';
-const HASHED_PW =
-	'$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS';
+// for demonstrative purposes, this is the ID I'll be using in my project.
+// const PROFILE_ID = '725543eb-8fd4-4e43-b5ac-2374c16900ef';
 
 client.query(
-	// need to work on authentication portion - causing errors here
-	// `SELECT id FROM profile WHERE username = ${USER_NAME} AND password = ${HASHED_PW};`,
-
-	// this is the ID we will be using as a foreign key in our tasks table for queries.
-	// "SELECT id FROM profile WHERE username = 'hank' AND password = '$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS';",
-
-	// this is the query where we can look up associated tasks for the unique user.
-	"SELECT * FROM task JOIN profile ON username = 'hank' AND password = '$2b$10$clhyK2suFbtjNYFUMD74n.BgM8Gk/P4mvyhXGw7FmFT6ZGbmn3MXS';",
-
-	(err, res) => {
-		if (!err) {
-			console.log(res.rows);
-		} else {
-			console.log(err.message);
-		}
-	}
+	"SELECT task_desc FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '725543eb-8fd4-4e43-b5ac-2374c16900ef';",
+	(err, res) => (err ? console.log(err.message) : console.log(res.rows))
 );
 
 // app.get('/', pgController.getList, (req, res) => {
