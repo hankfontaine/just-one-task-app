@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body, input {
+  background-color: black;
+  color: white;
+  font-size: 1.5em;
+}
