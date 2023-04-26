@@ -16,7 +16,7 @@ client.connect();
 const pgController = {
 	// GET list of user's completed tasks
 	getTasks: async (req, res, next) => {
-		console.log(req.params.id);
+		// console.log(req.params.id);
 
 		try {
 			const query = await client.query(

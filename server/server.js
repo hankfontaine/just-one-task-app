@@ -20,7 +20,6 @@ app.use(express.json());
 app.get('/api/:id', pgController.getTasks, (req, res) =>
 	res.status(200).json(res.locals.table)
 );
-
 // POST REQUEST handler:
 app.post(
 	'/api/:id/:task',
@@ -31,14 +30,13 @@ app.post(
 		res.status(200).json(res.locals.table);
 	}
 );
-
 // PATCH REQUEST handler:
 app.patch(
 	'/api/:id',
 	pgController.updateTask,
 	pgController.getTasks,
 	(req, res) => {
-		console.log(res.locals.table);
+		// console.log(res.locals.table);
 		res.status(200).json(res.locals.table);
 	}
 );
@@ -48,7 +46,7 @@ app.delete(
 	pgController.deleteTask,
 	pgController.getTasks,
 	(req, res) => {
-		console.log(res.locals.table);
+		// console.log(res.locals.table);
 		res.status(200).json(res.locals.table);
 	}
 );

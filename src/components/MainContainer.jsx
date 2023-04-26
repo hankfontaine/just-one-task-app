@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
+const nextId = 0;
+
 export default function MainContainer () {
   const [currentUser, setCurrentUser] = useState('725543eb-8fd4-4e43-b5ac-2374c16900ef');
   const [currentTask, setCurrentTask] = useState('');
@@ -45,6 +47,8 @@ export default function MainContainer () {
       .then((data) => data.json())
       .then((data) => {
         console.log(data);
+        setTasksArr(data);
+        console.log('tasksArr: ' + tasksArr);
       });
   };
 
@@ -56,6 +60,7 @@ export default function MainContainer () {
     <button onClick={() => handleComplete()}>Completed</button>
     <button onClick={() => handleDelete()}>Delete</button>
     <button onClick={() => handleGet()}>GETdb</button>
+    tasks{tasksArr}
     </>
   );
 }
