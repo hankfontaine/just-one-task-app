@@ -5,6 +5,7 @@ export default function MainContainer () {
   const [currentUser, setCurrentUser] = useState('725543eb-8fd4-4e43-b5ac-2374c16900ef');
   const [currentTask, setCurrentTask] = useState('');
   const [currentTaskComplete, setCurrentTaskComplete] = useState(true);
+  const [tasksArr, setTasksArr] = useState([]);
 
   const handleInput = () => {
     const reqOptions = {
@@ -41,7 +42,10 @@ export default function MainContainer () {
       headers: { 'Content-Type': 'application/json' }
     };
     fetch(`api/${currentUser}`, reqOptions)
-      .then((data) => { JSON.parse(data); console.log(data); });
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (

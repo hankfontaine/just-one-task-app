@@ -3,7 +3,7 @@
 /* eslint-disable no-tabs */
 const express = require('express');
 const pgController = require('./controller/pgController');
-const path = require('path');
+// const path = require('path');
 // const bcrypt = require('bcrypt'); // to be used for auth
 
 // set up server
@@ -17,11 +17,9 @@ app.use(express.json());
 // static user task for demo:
 // const task = 'do my laundry';
 
-app.get('/api/:id', pgController.getTasks, (req, res) => {
-	console.log(res.locals.table);
-	// res.status(200).send(JSON.stringify(res.locals.table));
-	res.status(200).send();
-});
+app.get('/api/:id', pgController.getTasks, (req, res) =>
+	res.status(200).json(res.locals.table)
+);
 
 // POST REQUEST handler:
 app.post(
@@ -29,7 +27,7 @@ app.post(
 	pgController.postTask,
 	pgController.getTasks,
 	(req, res) => {
-		console.log(res.locals.table);
+		// console.log('in server: ' + res.locals.table);
 		res.status(200).json(res.locals.table);
 	}
 );

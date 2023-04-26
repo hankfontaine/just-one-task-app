@@ -9,7 +9,7 @@
 		"dev": "webpack --mode=development",
 		"watch": "webpack --watch",
 		"serve": "webpack serve",
-		"devserver": "nodemon server/server.js & webpack serve --mode=development"
+		"devserver": "NODE_ENV=development webpack serve & nodemon server/server.js"
 	},
 	"author": "",
 	"license": "ISC",

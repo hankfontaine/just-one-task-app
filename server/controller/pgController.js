@@ -18,14 +18,12 @@ const pgController = {
 	getTasks: async (req, res, next) => {
 		console.log(req.params.id);
 
-		const query = await client.query(
-			`SELECT * FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '${req.params.id}';`
-		);
 		try {
-			res.locals.table = query.rows.map((task) => [
-				task.task_desc,
-				task.updated_at,
-			]);
+			const query = await client.query(
+				`SELECT * FROM task JOIN profile ON task.profile_id = profile.id WHERE profile.id = '${req.params.id}';`
+			);
+			// only giving user a list of successful tasks:
+			res.locals.table = query.rows.map((task) => [task.task_desc]);
 			return next();
 		} catch {
 			return next({
