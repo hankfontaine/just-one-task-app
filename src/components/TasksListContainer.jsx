@@ -4,6 +4,6 @@ import React, { useState } from 'react';
 
 export default function TasksListContainer (props) {
   return (
-    <div>{props.tasksArr}</div>
+    <ol>{props.tasksArr}</ol>
   );
 }
