@@ -19,7 +19,8 @@ app.use(express.json());
 
 app.get('/api/:id', pgController.getTasks, (req, res) => {
 	console.log(res.locals.table);
-	res.status(200).json(res.locals.table);
+	// res.status(200).send(JSON.stringify(res.locals.table));
+	res.status(200).send();
 });
 
 // POST REQUEST handler:

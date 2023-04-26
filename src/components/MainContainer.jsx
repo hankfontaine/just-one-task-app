@@ -40,7 +40,8 @@ export default function MainContainer () {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     };
-    fetch(`api/${currentUser}`, reqOptions);
+    fetch(`api/${currentUser}`, reqOptions)
+      .then((data) => { JSON.parse(data); console.log(data); });
   };
 
   return (
