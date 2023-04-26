@@ -17,14 +17,14 @@ app.use(express.json());
 // static user task for demo:
 // const task = 'do my laundry';
 
-app.get('/:id', pgController.getTasks, (req, res) => {
+app.get('/api/:id', pgController.getTasks, (req, res) => {
 	console.log(res.locals.table);
 	res.status(200).json(res.locals.table);
 });
 
 // POST REQUEST handler:
 app.post(
-	'/:id/:task',
+	'/api/:id/:task',
 	pgController.postTask,
 	pgController.getTasks,
 	(req, res) => {
@@ -35,7 +35,7 @@ app.post(
 
 // PATCH REQUEST handler:
 app.patch(
-	'/:id',
+	'/api/:id',
 	pgController.updateTask,
 	pgController.getTasks,
 	(req, res) => {
@@ -45,7 +45,7 @@ app.patch(
 );
 // DELETE REQUEST handler:
 app.delete(
-	'/:id',
+	'/api/:id',
 	pgController.deleteTask,
 	pgController.getTasks,
 	(req, res) => {

@@ -13,7 +13,7 @@ export default function MainContainer () {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: 'test' })
     };
-    fetch(`http://localhost:3000/${userId}/${currentTask.replace(' ', '_')}`, reqOptions)
+    fetch(`api/${userId}/${currentTask.replace(' ', '_')}`, reqOptions)
       .then(console.log('success'));
   };
 

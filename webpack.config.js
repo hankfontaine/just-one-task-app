@@ -24,7 +24,7 @@ const config = {
 		port: 8080,
 		// added / instead of /api :
 		proxy: {
-			'/': 'http://localhost:3000',
+			'/api': 'http://localhost:3000',
 		},
 	},
 	plugins: [
