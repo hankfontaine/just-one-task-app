@@ -17,11 +17,45 @@ export default function MainContainer () {
       .then(console.log('success'));
   };
 
+  const handleComplete = () => {
+    if (currentTask !== '') {
+      const reqOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      fetch(`api/${userId}`, reqOptions)
+        .then(console.log('patch req made'));
+    };
+  };
+
+  const handleDelete = () => {
+    if (currentTask !== '') {
+      const reqOptions = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      fetch(`api/${userId}`, reqOptions)
+        .then(console.log('delete req made'));
+    }
+  };
+
+  const handleGet = () => {
+    const reqOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    };
+    fetch(`api/${userId}`, reqOptions)
+      .then(console.log('get req made'));
+  };
+
   return (
     <>
     <div>hello there!</div>
-    <input placeholder='text goes here' onChange={e => setCurrentTask(e.target.value)}></input>
-    <button onClick={() => handleInput()}>Click me</button>
+    <input placeholder='text goes here' minLength={1} maxLength ={35} onChange={e => setCurrentTask(e.target.value)}></input>
+    <button onClick={() => handleInput()}>Submit</button>
+    <button onClick={() => handleComplete()}>Completed</button>
+    <button onClick={() => handleDelete()}>Delete</button>
+    <button onClick={() => handleGet()}>GETdb</button>
     </>
   );
 }
