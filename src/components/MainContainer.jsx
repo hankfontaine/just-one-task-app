@@ -21,7 +21,7 @@ export default function MainContainer () {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true));
+      fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
     };
   };
 
@@ -31,7 +31,7 @@ export default function MainContainer () {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true));
+      fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
     }
   };
 
@@ -47,7 +47,7 @@ export default function MainContainer () {
   return (
     <>
     <div>hello there!</div>
-    <input placeholder='text goes here' minLength={1} maxLength ={35} onChange={e => setCurrentTask(e.target.value)}></input>
+    <input placeholder='text goes here' minLength={1} maxLength ={35} value={currentTask} onChange={e => { setCurrentTask(e.target.value); }}></input>
     <button onClick={() => handleInput()}>Submit</button>
     <button onClick={() => handleComplete()}>Completed</button>
     <button onClick={() => handleDelete()}>Delete</button>
