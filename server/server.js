@@ -10,7 +10,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 app.use(express.json());
-app.use('/', express.static(path.join(__dirname, './public')));
+// app.use('/', express.static(path.join(__dirname, './public')));
 
 // static user profile.id for demo:
 // const profileId = '725543eb-8fd4-4e43-b5ac-2374c16900ef';

@@ -31,6 +31,7 @@ const config = {
 		new HtmlWebpackPlugin({
 			template: 'index.html',
 		}),
+		new MiniCssExtractPlugin({ filename: './input.css' }),
 
 		// Add your plugins here
 		// Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -52,7 +53,12 @@ const config = {
 			},
 			{
 				test: /\.s[ac]ss$/i,
-				use: [stylesHandler, 'css-loader', 'postcss-loader', 'sass-loader'],
+				use: [
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					'sass-loader',
+					'postcss-loader',
+				],
 			},
 			{
 				test: /\.css$/i,
@@ -74,7 +80,7 @@ module.exports = () => {
 	if (isProduction) {
 		config.mode = 'production';
 
-		config.plugins.push(new MiniCssExtractPlugin());
+		config.plugins.push(new MiniCssExtractPlugin({ filename: './input.css' }));
 	} else {
 		config.mode = 'development';
 	}
