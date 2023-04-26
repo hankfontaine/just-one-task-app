@@ -1,20 +1,16 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
 export default function MainContainer () {
-  const userId = '725543eb-8fd4-4e43-b5ac-2374c16900ef';
-
+  const [currentUser, setCurrentUser] = useState('725543eb-8fd4-4e43-b5ac-2374c16900ef');
   const [currentTask, setCurrentTask] = useState('');
 
   const handleInput = () => {
-    console.log('current task: ' + currentTask);
-
     const reqOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: 'test' })
+      headers: { 'Content-Type': 'application/json' }
     };
-    fetch(`api/${userId}/${currentTask.replace(' ', '_')}`, reqOptions)
-      .then(console.log('success'));
+    fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions);
   };
 
   const handleComplete = () => {
@@ -23,8 +19,7 @@ export default function MainContainer () {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch(`api/${userId}`, reqOptions)
-        .then(console.log('patch req made'));
+      fetch(`api/${currentUser}`, reqOptions);
     };
   };
 
@@ -34,8 +29,7 @@ export default function MainContainer () {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch(`api/${userId}`, reqOptions)
-        .then(console.log('delete req made'));
+      fetch(`api/${currentUser}`, reqOptions);
     }
   };
 
@@ -44,8 +38,7 @@ export default function MainContainer () {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     };
-    fetch(`api/${userId}`, reqOptions)
-      .then(console.log('get req made'));
+    fetch(`api/${currentUser}`, reqOptions);
   };
 
   return (
