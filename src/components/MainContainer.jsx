@@ -65,7 +65,6 @@ export default function MainContainer () {
   return (
     <>
     <Header userNotification={userNotification}/>
-    <InputContainer currentTask={currentTask} setCurrentTask={setCurrentTask} />
     <FormContainer
       currentUser={currentUser}
       setCurrentUser={setCurrentUser}

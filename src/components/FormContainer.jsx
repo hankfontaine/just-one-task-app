@@ -1,9 +1,12 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import InputContainer from './InputContainer';
 
 export default function FormContainer (props) {
   return (
     <>
+    <InputContainer currentTask={props.currentTask} setCurrentTask={props.setCurrentTask} />
     <button onClick={() => props.handleInput()}>Submit</button>
     <button onClick={() => props.handleComplete()}>Completed</button>
     <button onClick={() => props.handleDelete()}>Delete</button>
