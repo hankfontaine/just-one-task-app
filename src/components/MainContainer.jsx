@@ -1,14 +1,20 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import InputContainer from './InputContainer';
+import TasksListContainer from './TasksListContainer';
+import FormContainer from './FormContainer';
 
 export default function MainContainer () {
   const [currentUser, setCurrentUser] = useState('725543eb-8fd4-4e43-b5ac-2374c16900ef');
   const [currentTask, setCurrentTask] = useState('');
   const [currentTaskComplete, setCurrentTaskComplete] = useState(true);
   const [tasksArr, setTasksArr] = useState([]);
-  const [userNotification, setUserNotification] = useState('___________');
+  const [userNotification, setUserNotification] = useState('.');
 
   const handleInput = () => {
+    setTasksArr('');
     const reqOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
@@ -19,6 +25,7 @@ export default function MainContainer () {
   };
 
   const handleComplete = () => {
+    setTasksArr('');
     if (currentTask !== '' && currentTaskComplete === false) {
       const reqOptions = {
         method: 'PATCH',
@@ -30,6 +37,7 @@ export default function MainContainer () {
   };
 
   const handleDelete = () => {
+    setTasksArr('');
     if (currentTask !== '' && currentTaskComplete === false) {
       const reqOptions = {
         method: 'DELETE',
@@ -41,6 +49,7 @@ export default function MainContainer () {
   };
 
   const handleGet = () => {
+    setTasksArr('');
     const reqOptions = {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -50,18 +59,29 @@ export default function MainContainer () {
       .then((data) => data.json())
       .then((data) => {
         setTasksArr(data);
-      }).then(setUserNotification('___________'));
+      }).then(setUserNotification('.'));
   };
 
   return (
     <>
-    {userNotification}
-    <input placeholder='text goes here' minLength={1} maxLength ={35} value={currentTask} onChange={e => { setCurrentTask(e.target.value); }}></input>
-    <button onClick={() => handleInput()}>Submit</button>
-    <button onClick={() => handleComplete()}>Completed</button>
-    <button onClick={() => handleDelete()}>Delete</button>
-    <button onClick={() => handleGet()}>GETdb</button>
-    tasks{tasksArr}
+    <Header userNotification={userNotification}/>
+    <InputContainer currentTask={currentTask} setCurrentTask={setCurrentTask} />
+    <FormContainer
+      currentUser={currentUser}
+      setCurrentUser={setCurrentUser}
+      currentTask={currentTask}
+      setCurrentTask={setCurrentTask}
+      tasksArr={tasksArr}
+      setTasksArr={setTasksArr}
+      userNotification={userNotification}
+      setUserNotification={setUserNotification}
+      handleInput={handleInput}
+      handleComplete={handleComplete}
+      handleDelete={handleDelete}
+      handleGet={handleGet}
+    />
+    <TasksListContainer tasksArr={tasksArr}/>
+    <Footer />
     </>
   );
 }
