@@ -3,6 +3,6 @@ import React, { useState } from 'react';
 
 export default function Footer (props) {
   return (
-    <footer>c</footer>
+    <footer>footer</footer>
   );
 }

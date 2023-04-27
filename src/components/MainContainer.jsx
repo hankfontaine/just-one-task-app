@@ -64,10 +64,7 @@ export default function MainContainer () {
 
   return (
     <>
-    <header>
     <Header userNotification={userNotification}/>
-    </header>
-    <main>
     <FormContainer
       currentUser={currentUser}
       setCurrentUser={setCurrentUser}
@@ -83,10 +80,7 @@ export default function MainContainer () {
       handleGet={handleGet}
     />
     <TasksListContainer tasksArr={tasksArr}/>
-    </main>
-    <footer>
     <Footer />
-    </footer>
     </>
   );
 }
