@@ -28,11 +28,13 @@ export default function MainContainer () {
       };
       fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
         .then(setCurrentTaskComplete(false));
-      setUserNotification('input recieved: ' + currentTask);
+      setUserNotification('input recieved: "' + currentTask + '" click when done.');
     }
   };
 
   const handleComplete = () => {
+    // handleInput();
+
     if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
       console.log('current task: ' + currentTask);
       setTasksArr('');
@@ -43,17 +45,19 @@ export default function MainContainer () {
       fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
         .then(setCurrentTaskComplete(false));
       setUserNotification('✓: ' + currentTask);
-    }
 
-    setTasksArr('');
-    if (currentTask !== '' && currentTaskComplete === false) {
-      const reqOptions = {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' }
+      // handleInput();
+    } else {
+      setTasksArr('');
+      if (currentTask !== '' && currentTaskComplete === false) {
+        const reqOptions = {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' }
+        };
+        fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
+        setUserNotification('objective completed');
       };
-      fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
-      setUserNotification('objective completed');
-    };
+    }
   };
 
   const handleDelete = () => {
@@ -74,13 +78,14 @@ export default function MainContainer () {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     };
-    setUserNotification('retrieving data...');
+    // setUserNotification('retrieving data...');
     fetch(`api/${currentUser}`, reqOptions)
       .then((data) => data.json())
       .then((data) => {
         if (currentTaskComplete === true) setTasksArr(data);
         else setTasksArr(data.slice(0, -1));
-      }).then(setUserNotification('submit'));
+      });
+    // .then(setUserNotification('submit'));
   };
 
   console.log('current task: ' + currentTask, 'is it complete? ' + currentTaskComplete);
