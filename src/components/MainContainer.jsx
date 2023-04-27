@@ -14,14 +14,17 @@ export default function MainContainer () {
   const [userNotification, setUserNotification] = useState('.');
 
   const handleInput = () => {
-    setTasksArr('');
-    const reqOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
-    };
-    fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
-      .then(setCurrentTaskComplete(false));
-    setUserNotification('input recieved');
+    if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
+      console.log('current task: ' + currentTask);
+      setTasksArr('');
+      const reqOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
+        .then(setCurrentTaskComplete(false));
+      setUserNotification('input recieved');
+    }
   };
 
   const handleComplete = () => {
