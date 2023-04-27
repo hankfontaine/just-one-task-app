@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import InputContainer from './InputContainer';
@@ -7,11 +7,24 @@ import TasksListContainer from './TasksListContainer';
 import FormContainer from './FormContainer';
 
 export default function MainContainer () {
-  const [currentUser, setCurrentUser] = useState('725543eb-8fd4-4e43-b5ac-2374c16900ef');
-  const [currentTask, setCurrentTask] = useState('');
-  const [currentTaskComplete, setCurrentTaskComplete] = useState(true);
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || '725543eb-8fd4-4e43-b5ac-2374c16900ef');
+  const [currentTask, setCurrentTask] = useState(localStorage.getItem('currentTask') || '');
+  const [currentTaskComplete, setCurrentTaskComplete] = useState(localStorage.getItem('currentTaskComplete') === 'true' || true);
   const [tasksArr, setTasksArr] = useState([]);
   const [userNotification, setUserNotification] = useState('.');
+
+  useEffect(() => {
+    localStorage.setItem('currentUser', currentUser);
+    localStorage.setItem('currentTask', currentTask);
+    localStorage.setItem('currentTaskComplete', currentTaskComplete);
+  }, [currentUser, currentTask, currentTaskComplete]);
+
+  if (localStorage.getItem('currentTask')) {
+    console.log('task? ' + currentTask);
+    // const curr = localStorage.getItem('currentTask');
+    // setCurrentTask(curr);
+    // return;
+  }
 
   const handleInput = () => {
     if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
@@ -23,7 +36,7 @@ export default function MainContainer () {
       };
       fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
         .then(setCurrentTaskComplete(false));
-      setUserNotification('input recieved');
+      setUserNotification('input recieved: ' + currentTask);
     }
   };
 
@@ -65,6 +78,8 @@ export default function MainContainer () {
         else setTasksArr(data.slice(0, -1));
       }).then(setUserNotification('.'));
   };
+
+  currentTask ? handleInput() : console.log('no task in state');
 
   return (
     <>
