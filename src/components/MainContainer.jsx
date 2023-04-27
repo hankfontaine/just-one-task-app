@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import InputContainer from './InputContainer';
 import TasksListContainer from './TasksListContainer';
 import FormContainer from './FormContainer';
 
@@ -18,13 +17,6 @@ export default function MainContainer () {
     localStorage.setItem('currentTask', currentTask);
     localStorage.setItem('currentTaskComplete', currentTaskComplete);
   }, [currentUser, currentTask, currentTaskComplete]);
-
-  if (localStorage.getItem('currentTask')) {
-    console.log('task? ' + currentTask);
-    // const curr = localStorage.getItem('currentTask');
-    // setCurrentTask(curr);
-    // return;
-  }
 
   const handleInput = () => {
     if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
@@ -79,7 +71,8 @@ export default function MainContainer () {
       }).then(setUserNotification('.'));
   };
 
-  currentTask ? handleInput() : console.log('no task in state');
+  console.log('current task: ' + currentTask, 'is it complete? ' + currentTaskComplete);
+  // currentTask ? handleInput() : console.log('no task in state');
 
   return (
     <>

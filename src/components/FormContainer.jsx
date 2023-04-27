@@ -6,7 +6,7 @@ import InputContainer from './InputContainer';
 export default function FormContainer (props) {
   return (
     <main>
-    <InputContainer aria-label='input-container' currentTask={props.currentTask} setCurrentTask={props.setCurrentTask} />
+      <input aria-label='input' placeholder='text goes here' minLength={1} maxLength ={35} value={props.currentTask} onChange={e => { props.setCurrentTask(e.target.value); }}></input>
     <div>
     <button onClick={() => props.handleInput()}>--SUBMIT TASK--</button>
     </div>

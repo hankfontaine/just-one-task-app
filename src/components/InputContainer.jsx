@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 export default function InputContainer (props) {
   return (
     <>
-<input aria-label='input' placeholder='your one to-do?' minLength={1} maxLength ={35} value={props.currentTask} onChange={e => { props.setCurrentTask(e.target.value); }}></input>
     </>
   );
 }
