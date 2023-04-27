@@ -11,6 +11,7 @@ export default function MainContainer () {
   const [currentTaskComplete, setCurrentTaskComplete] = useState(localStorage.getItem('currentTaskComplete') === 'true' || true);
   const [tasksArr, setTasksArr] = useState([]);
   const [userNotification, setUserNotification] = useState('submit');
+  const [hiddenTaskbox, setHiddenTaskbox] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('currentUser', currentUser);
@@ -20,23 +21,20 @@ export default function MainContainer () {
 
   const handleInput = () => {
     if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
-      console.log('current task: ' + currentTask);
       setTasksArr('');
       const reqOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       };
-      fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
-        .then(setCurrentTaskComplete(false));
+      fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions);
       setUserNotification('input recieved: "' + currentTask + '" click when done.');
+      setHiddenTaskbox(true);
+      console.log(setHiddenTaskbox);
     }
   };
 
   const handleComplete = () => {
-    // handleInput();
-
     if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
-      console.log('current task: ' + currentTask);
       setTasksArr('');
       const reqOptions = {
         method: 'POST',
@@ -45,8 +43,7 @@ export default function MainContainer () {
       fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
         .then(setCurrentTaskComplete(false));
       setUserNotification('✓: ' + currentTask);
-
-      // handleInput();
+      setHiddenTaskbox(true);
     } else {
       setTasksArr('');
       if (currentTask !== '' && currentTaskComplete === false) {
@@ -56,6 +53,7 @@ export default function MainContainer () {
         };
         fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
         setUserNotification('objective completed');
+        setHiddenTaskbox(false);
       };
     }
   };
@@ -69,6 +67,7 @@ export default function MainContainer () {
       };
       fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
       setUserNotification('objective deleted. enter new task');
+      setHiddenTaskbox(false);
     }
   };
 

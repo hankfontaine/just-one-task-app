@@ -3,7 +3,13 @@
 import React, { useState } from 'react';
 
 export default function TasksListContainer (props) {
+  const propsArr = [];
+
+  for (let i = 0; i < props.tasksArr.length; i++) {
+    propsArr.push(<li>{props.tasksArr[i]}</li>);
+  }
+
   return (
-    <ol>{props.tasksArr}</ol>
+    <ol className='taskList'>{propsArr}</ol>
   );
 }
