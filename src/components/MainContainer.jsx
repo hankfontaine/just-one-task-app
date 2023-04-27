@@ -61,7 +61,8 @@ export default function MainContainer () {
     fetch(`api/${currentUser}`, reqOptions)
       .then((data) => data.json())
       .then((data) => {
-        setTasksArr(data);
+        if (currentTaskComplete === true) setTasksArr(data);
+        else setTasksArr(data.slice(0, -1));
       }).then(setUserNotification('.'));
   };
 
