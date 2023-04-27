@@ -5,10 +5,6 @@ import React, { useState } from 'react';
 export default function Header (props) {
   return (
     <header>
-      header
-      <div>
-      {props.userNotification}
-      </div>
-      </header>
+    </header>
   );
 }

@@ -10,7 +10,7 @@ export default function MainContainer () {
   const [currentTask, setCurrentTask] = useState(localStorage.getItem('currentTask') || '');
   const [currentTaskComplete, setCurrentTaskComplete] = useState(localStorage.getItem('currentTaskComplete') === 'true' || true);
   const [tasksArr, setTasksArr] = useState([]);
-  const [userNotification, setUserNotification] = useState('.');
+  const [userNotification, setUserNotification] = useState('submit');
 
   useEffect(() => {
     localStorage.setItem('currentUser', currentUser);
@@ -33,6 +33,18 @@ export default function MainContainer () {
   };
 
   const handleComplete = () => {
+    if (currentTaskComplete === true && currentTask.replace(/\s/g, '').length) { // check if input is empty string or overwrite
+      console.log('current task: ' + currentTask);
+      setTasksArr('');
+      const reqOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      };
+      fetch(`api/${currentUser}/${currentTask.replace(' ', '_')}`, reqOptions)
+        .then(setCurrentTaskComplete(false));
+      setUserNotification('✓: ' + currentTask);
+    }
+
     setTasksArr('');
     if (currentTask !== '' && currentTaskComplete === false) {
       const reqOptions = {
@@ -52,7 +64,7 @@ export default function MainContainer () {
         headers: { 'Content-Type': 'application/json' }
       };
       fetch(`api/${currentUser}`, reqOptions).then(setCurrentTaskComplete(true)).then(setCurrentTask(''));
-      setUserNotification('objective deleted');
+      setUserNotification('objective deleted. enter new task');
     }
   };
 
@@ -68,7 +80,7 @@ export default function MainContainer () {
       .then((data) => {
         if (currentTaskComplete === true) setTasksArr(data);
         else setTasksArr(data.slice(0, -1));
-      }).then(setUserNotification('.'));
+      }).then(setUserNotification('submit'));
   };
 
   console.log('current task: ' + currentTask, 'is it complete? ' + currentTaskComplete);
