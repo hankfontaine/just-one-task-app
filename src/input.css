@@ -3,10 +3,9 @@
 @tailwind utilities;
 
 body, input {
-  background-color: black;
-  color: white;
   font-size: 1.5em;
   display: flex;
   justify-content: center;
   text-align: center;
+  padding-top: 10vh;
 }
