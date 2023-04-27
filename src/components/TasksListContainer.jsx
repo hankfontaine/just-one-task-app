@@ -11,7 +11,7 @@ export default function TasksListContainer (props) {
 
   return (
     <div className='#334155 tasks-container'>
-    <ol className='taskList'>{propsArr}</ol>
+    <ol className='taskList font-medium'>{propsArr}</ol>
     </div>
   );
 }
